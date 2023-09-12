@@ -9,7 +9,7 @@ abstract class AbstractService {
    abstract protected function save($entity);
    abstract protected function findById($id): Model;
    abstract protected function findAll();
-   abstract protected function update($entity);
+   abstract protected function update($entity, $id);
    abstract protected function delete($id);
 
 }

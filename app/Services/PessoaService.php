@@ -13,19 +13,43 @@ class PessoaService  extends AbstractService {
     }
 
     public function findById($id): Pessoa{
-        return Pessoa::find($id);
+        $pessoa = Pessoa::find($id);
+        if ( $pessoa == null) {
+            return new Pessoa();
+        }
+        return $pessoa;
     }
 
-    public function save($entity) {
+    public function save($request) {
 
+        $pessoa = Pessoa::create([
+            "cpf" =>  $request->cpf,
+            "nome" => $request->nome,
+            "observacao"=> $request->observacao,
+            "rg" => $request->rg
+        ]);
+       /* $pessoa = Pessoa::create(
+            request()->all()
+        );*/
+        
+        $pessoa->refresh();
+        return $pessoa;
     }
 
-    public function update($entity){
-
+    public function update($request, $id){
+        $pessoa = Pessoa::find($id);
+        $pessoa->cpf = $request->cpf;
+        $pessoa->nome = $request->nome;
+        $pessoa->rg = $request->rg;
+        $pessoa->save();
+        $pessoa->refresh();
+        return $pessoa;
     }
 
     public function delete($id){
-
+        $pessoa = Pessoa::find($id);
+        $pessoa->delete();
+        return true;
     }
 
    
